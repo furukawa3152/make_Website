@@ -1,0 +1,87 @@
+@charset = "UTF-8";
+/*共通部分*/
+html{
+font-size:100%
+
+}
+body{
+font-family: 'Noto Sans JP', sans-serif;
+line-height: 1.7;
+color:#fffefc
+}
+a{
+text-decoration:None
+}
+
+img{
+max-width:100%
+}
+
+/*header*/
+.logo{
+width: 200px;
+margin-top: 14px;
+}
+
+.main-nav{
+display: flex;
+font-size: 1.25rem;
+text-transform: uppercase;/*大文字*/
+margin-top: 14px;
+list-style: none;/*リストの頭に点をつけない*/
+}
+.main-nav li{
+margin-left: 36px;
+}
+.main-nav a{
+color:#fffefc;
+}
+.main-nav a:hover{
+color:#eda81c;
+}
+
+.page-header{
+display: flex;
+justify-content: space-between;
+}
+
+/*ページの最大幅を設定*/
+.wrapper{
+max-width: 1100px;
+margin: 0auto;
+padding:0 4%;
+}
+
+/*HOME*/
+.home-content{
+text-align:center;
+margin-top: 10%;
+}
+.home-content p{
+font-size: 1.125rem;
+margin: 10px 0 42px;
+color:#fffefc;
+}
+.home-content a{
+color:#fffefc;
+}
+.home-content a:hover{
+color:#eda81c;
+}
+
+/*ページタイトル*/
+.page-title{
+font-size: 5rem;
+font-weight:bold
+}
+/*大きな背景画像*/
+.big-bg{
+background-size: cover;
+background-position: center top;
+background-repeat: no-repeat}
+
+#home{
+background-image: url(../image/img207.jpg);
+min-height: 100vh;
+}
+
