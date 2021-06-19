@@ -139,6 +139,10 @@ article{
     width: 74%;
     color: #383736;
     }
+
+.photos{
+    border-radius: 2px;
+}
 /*サイドバ－*/
 aside{
     width: 22%;
@@ -200,7 +204,7 @@ aside{
 }
 .camera-info{
     padding: 3px;
-    border-radius: 10px;
+    border-radius: 5px;
     width:80%;
 
 }
@@ -281,14 +285,15 @@ aside{
     margin-bottom: 50px;
 }
 .item p{
-    color:#b5b5b5;
+    color:#383736;
 }
 .big-box{
     grid-column: 1/3;
     grid-row: 1/3;
 }
 .big-box img{
-    height:94%;
+    height:85%;
     width:100%;
     object-fit: cover;
+    border-radius: 5px;
 }
