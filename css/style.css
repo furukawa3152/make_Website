@@ -309,5 +309,10 @@ aside{
 /*codeの本文*/
 .code-body{
 color: #383736;
-padding:0 40px 0 40px;
+padding:0 30px 10px 30px;
+}
+
+.code-line{
+font-size:9px;
+margin-left:3px;
 }
