@@ -305,3 +305,8 @@ aside{
     object-fit: cover;
     border-radius: 5px;
 }
+
+/*codeの本文*/
+.code-body{
+margin-left:30px;
+}
