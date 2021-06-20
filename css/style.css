@@ -308,5 +308,6 @@ aside{
 
 /*codeの本文*/
 .code-body{
-padding-left:30px;
+color: #383736;
+padding:0 15px 0 15px;
 }
