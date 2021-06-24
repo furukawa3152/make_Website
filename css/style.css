@@ -158,7 +158,8 @@ aside{
 .post-info{
     position: relative;
     padding-top: 4px;
-    margin-bottom: 20px;}
+    border-bottom: 1px #b5b5b5 solid;
+    margin-bottom: 5px;}
 /*.post-date{
     background:#0bd;
     border-radius: 50%;
@@ -249,7 +250,8 @@ aside{
         margin-top: 60px;
     }
     .post-info{
-        margin-bottom: 30px;
+        margin-bottom: 5px;
+        border-bottom: 1px #b5b5b5 solid;
     }
     .post-date{
         width:70px;
@@ -266,6 +268,9 @@ aside{
     .post-cat{
         font-size: 0.875rem;
         margin-top: 10px;
+    }
+    .post-icon{
+        padding-top:5px;
     }
     .post-title,
     .post-cat{
@@ -313,6 +318,15 @@ padding:0 30px 10px 30px;
 }
 
 .code-line{
-font-size:10px;
+/*font-family: "游ゴシック", "Yu Gothic", "游ゴシック体", YuGothic, sans-serif;*/
+font-size:0.8rem;
 margin-left:3px;
 }
+
+.body-leftimage{
+    display: flex;
+    margin: 3px 3px 3px 3px;
+}
+
+
+

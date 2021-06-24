@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>itaru`s productlibrary</title>
+    <meta name="viewport" content="width=device-width, initial-scale-1">
+    <!--  css-->
+    <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300&display=swap" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <!--    javascript_test-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/css/lightbox.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/js/lightbox.min.js"
+            type="text/javascript"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=desert"></script>
+
+
+</head>
+<body>
+<!--このDIVで囲った部分いっぱいに画像を表示-->
+<div id="library" class="big-bg">
+    <header class="page-header wrapper">
+        <h1><a href="index.html"><img class="logo" src="image/logo.png" alt="itapro"></a></h1>
+
+        <nav>
+            <ul class="main-nav">
+                <li><a href="index.html">Top</a></li>
+                <li><a href="library.html">Photos</a></li>
+                <li><a href="code.html">Code</a></li>
+            </ul>
+
+        </nav>
+
+    </header>
+    <div class="wrapper">
+        <h2 class="page-title">Code</h2>
+    </div>
+</div>
+
+<div class="code-body">
+    <header class="post-info">
+        <h2 class="post-title">ポテト坊やを探すWebアプリ</h2>
+        <img class="post-icon" src="image/potate_boy.jpg" alt="potate_boy" width=55rem>
+        <p class="post-cat">category:code:potate_boy_app</p>
+    </header>
+
+    <p>
+        機械学習のハッカソンに参加して、何やら一人趣旨をはき違えて作成してしまったアプリです。<br>
+        →<a href="https://share.streamlit.io/furukawa3152/streamlit_deptest/potate_test.py">
+        URL(カルビーさんに一応見せたのでちょっとだけ公式と言えるかも(笑））</a><br>
+        ※スマホで縦画面で使う前提で作っています。<br>
+        主な使用ライブラリ：opencv,streamlit<br>
+        やりたかったこと：ポテトチップスの袋を見分ける画像認識モデル作成の下準備のために、左上のキャラクターの位置を返す
+        プログラムを書きたい。<br>
+        →<a href="http://labs.eecs.tottori-u.ac.jp/sd/Member/oyamada/OpenCV/html/py_tutorials/py_imgproc/py_template_matching/py_template_matching.html">
+        open-cvのmatchTemplate</a>を利用して実装できそう。
+    </p>
+    <div class="body-leftimage">
+        <img class="leftimage-img "src="image/potate_boy.jpg" alt="potate_boy" width=80rem>
+        <p class="leftimage-text">
+        ←potate_boy.jpg
+        </p>
+    </div>
+    <div class="body-leftimage">
+        <img class="leftimage-img "src="image/potato_boy_face.jpg" alt="potate_boy_face">
+        <p class="leftimage-text">
+        ←potate_boy_face.jpg
+        </p>
+    </div>
+    <p>こういう二つの画像を用意してcv2.matchTemplateで処理する。</p>
+
+
+    <pre class="code-line prettyprint linenums" style="overflow:auto; overflow-y:hidden;">
+    import cv2
+
+    image = cv2.imread("potate_boy.jpg")
+    template = cv2.imread("potate_boy_face.jpg")
+    (hight, width, color) = template.shape
+    result = cv2.matchTemplate(image, template, cv2.TM_CCOEFF_NORMED)
+    min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
+    cv2.rectangle(image, max_loc, (max_loc[0] + width, max_loc[1] + hight), 255, 2)
+    cv2.imshow("test", image)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()        </pre>
+    <div class="body-leftimage">
+    <img class="leftimage-img "src="image/potate_result.jpg" alt="potate_result">
+    <p class="leftimage-text">
+    ←こういう画像を返してくれます。一致する場所にrectangleを描いた状態です。
+    </p>
+    </div>
+    <pre class="code-line prettyprint linenums" style="overflow:auto; overflow-y:hidden;">
+    result = cv2.matchTemplate(image, template, cv2.TM_CCOEFF_NORMED)</pre>
+    <p>の部分で画像全体の一致度を配列として返してくれており、</p>
+    <pre class="code-line prettyprint linenums" style="overflow:auto; overflow-y:hidden;">
+    min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)</pre>
+    <p>を出すことで最も高い一致度（max_val）を示す座標(min_loc, max_loc)を返す。<br>
+    と、ここまで出来たら後は楽勝かと思ったらそうでもなかった・・・
+    </p>
+    <p class="post-info"></p>
+    <h3>課題1：サイズの不一致に弱い</h3>
+    <p>templateのサイズが変わると、途端に一致度が極端に下がるのである。このままでは実用性はかなり低い。</p>
+    <p>→対策：templateのサイズを縮小→拡大していき、最も一致度の高い拡大率で判定する。</p>
+    <pre class="code-line prettyprint linenums" style="overflow:auto; overflow-y:hidden;">
+    import numpy as np
+    import cv2
+　　 def macth_image(image, template):  # マッチした位置、スケール、一致度を返す
+        height = template.shape[0]
+        width = template.shape[1]
+        g_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)  # グレースケール加工
+        scale = [0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1, 1.05, 1.1, 1.15,
+                 1.2, 1.25,
+                 1.3, 1.35, 1.4, 1.45, 1.5, 1.55, 1.6, 1.65, 1.7, 1.75, 1.8, 2, 2.3, 2.6, 2.8, 3, 3.2, 3.5]
+        rank = []#一致度のみを格納するlist
+        for i in scale:  # scaleのパターンだけ縮小→拡大し、最もマッチする値を選ぶ
+            g_template = cv2.cvtColor(template, cv2.COLOR_BGR2GRAY)
+            g_template = cv2.resize(g_template, (int(width * i), int(height * i)))  # 縮小拡大
+            result = cv2.matchTemplate(g_image, g_template, cv2.TM_CCOEFF_NORMED)
+            min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
+            rank.append(max_val)
+
+        best_scale = scale[np.argmax(rank)]
+        g_template = cv2.cvtColor(template, cv2.COLOR_BGR2GRAY)
+        g_template = cv2.resize(g_template, (int(width * best_scale), int(height * best_scale)))  # 縮小拡大
+        result = cv2.matchTemplate(g_image, g_template, cv2.TM_CCOEFF_NORMED)
+        min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
+        return (min_val, max_val, min_loc, max_loc, g_template, best_scale)
+    </pre>
+    <p>scaleの幅は何となく設定。増やしすぎると時間がかかるため、この辺が実用的というところにおさまった。
+        また、こういう画像処理はグレースケールで行う方がよいと聞いたのでついでに実装。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+</body>
+<footer>
+    <div class="wrapper">
+        <p><small>&copy; 2021 furukawa3152</small></p>
+    </div>
+
+</footer>
+</html>
