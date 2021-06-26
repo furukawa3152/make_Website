@@ -323,10 +323,19 @@ font-size:0.9rem;
 margin-left:3px;
 }
 
-.body-leftimage{
+.body-withimage{
     display: flex;
     margin: 3px 3px 3px 3px;
 }
+.app_button{
+    color: black;
+    background-color: #eda81c;
+    border-radius: 5px;
+}
+.app_button:hover{
+margin-top: 3px;
+    color: black;
+    background-color: #f56500;
 
-
+}
 
