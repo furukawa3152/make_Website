@@ -13,6 +13,7 @@ a{
     text-decoration:None
 }
 
+
 img{
     max-width:100%
 }
@@ -215,7 +216,6 @@ aside{
     padding: 3px;
     border-radius: 5px;
     width:80%;
-
 }
 
 @media (max-width:600px){
@@ -339,8 +339,32 @@ margin-top: 3px;
 
 }
 
+/*Formrun*/
+.formrun{
+    position:relative;
+    color: #383736;
+    margin-left: 3rem
+}
+.input{
+    border: solid 1px #A4A4A4;
+    width: 15rem;
+    border-radius: 2px ;
 
-/*thanx*/
-
-
-
+}
+.input_body{
+    width: 80%;
+    line-height: 1.5;
+    height: 10em;
+}
+.send_icon{
+    position:absolute;
+    top: 0.7rem;
+    padding: 0 0.4rem 0 0.4rem;
+    margin-left: 18rem;
+    font-size:1.5rem;
+    border: solid 1px #A4A4A4;
+    border-radius: 5px ;
+}
+.contact_body{
+    font-weight:normal;
+}
