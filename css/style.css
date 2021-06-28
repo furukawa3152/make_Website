@@ -26,13 +26,13 @@ img{
 
 .main-nav{
     display: flex;
-    font-size: 1.0rem;
+    font-size: 1.5rem;
     text-transform: uppercase;/*大文字*/
     margin-top: 14px;
     list-style: none;/*リストの頭に点をつけない*/
 }
 .main-nav li{
-    margin-left: 36px;
+    margin-left: 3rem;
 }
 .main-nav a{
     color:#fffefc;
@@ -228,8 +228,8 @@ aside{
         font-size: 1rem;
         margin-top: 10px;
     }
-    .main-navi li{
-        margin: 0 20px;
+    .main-nav li{
+        margin: 0 10px;
     }
     /*HOME*/
     .home-content{
