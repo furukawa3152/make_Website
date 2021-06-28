@@ -229,7 +229,7 @@ aside{
         margin-top: 10px;
     }
     .main-nav li{
-        margin: 0 10px;
+        margin-left: 1rem;
     }
     /*HOME*/
     .home-content{
