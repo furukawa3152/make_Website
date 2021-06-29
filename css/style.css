@@ -405,6 +405,9 @@ margin-top: 3px;
 }
 
 /*リンクの色を変えない*/
-a{
+a,
+a:visited,
+a:hover,
+a:active {
   color: inherit;
 }
