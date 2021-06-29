@@ -405,6 +405,6 @@ margin-top: 3px;
 }
 
 /*リンクの色を変えない*/
-a:visited{
+a{
   color: inherit;
 }
