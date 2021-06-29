@@ -9,6 +9,13 @@ body{
     line-height: 1.7;
     color:#fffefc
 }
+/*リンクの色を変えない*/
+a,
+a:visited,
+a:hover,
+a:active {
+  color: inherit;
+}
 a{
     text-decoration:None
 }
@@ -404,10 +411,3 @@ margin-top: 3px;
     font-weight:normal;
 }
 
-/*リンクの色を変えない*/
-a,
-a:visited,
-a:hover,
-a:active {
-  color: inherit;
-}
