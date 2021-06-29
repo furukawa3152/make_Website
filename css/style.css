@@ -26,13 +26,13 @@ img{
 
 .main-nav{
     display: flex;
-    font-size: 1.5rem;
+    font-size: 25px;
     text-transform: uppercase;/*大文字*/
     margin-top: 14px;
     list-style: none;/*リストの頭に点をつけない*/
 }
 .main-nav li{
-    margin-left: 3rem;
+    margin-left: 25px;
 }
 .main-nav a{
     color:#fffefc;
@@ -55,7 +55,8 @@ img{
 
 /*HOME*/
 .home-content{
-    text-align:center;
+    position: relative;
+    text-align:left;
     margin-top: 10%;
 }
 .home-content p{
@@ -69,12 +70,36 @@ img{
 .home-content a:hover{
     color:#eda81c;
 }
+.home-under{
+    position: absolute;
+    bottom: 20px;
+    margin-left:4%;
+    padding: 0;
+    border: solid 1px #A4A4A4;
+    border-radius: 5px ;
+    padding: 2px 3px 2px 3px;
+}
 
 /*ページタイトル*/
-.page-title{
-    font-size: 4rem;
-    font-weight:bold
+.mainpage-title{
+    font-size: 4.5rem;
+    font-weight:normal;
+    color: transparent;
+    text-stroke: 1px white;
+    -webkit-text-stroke: 1px white;
+
 }
+
+.page-title{
+    font-size: 4.5rem;
+    font-weight:normal;
+    }
+
+
+.page-subtitle{
+    font-size: 2rem;
+    font-weight:normal;
+ }
 /*大きな背景画像*/
 .big-bg{
     background-size: cover;
@@ -85,7 +110,7 @@ img{
 #home{
     background-image: url(../image/img207.jpg);
     background-color:#383736;
-    background-blend-mode: hard-light;
+    background-blend-mode: soft-light;
     min-height: 100vh;
 }
 
@@ -94,7 +119,7 @@ img{
     background-image: url(../image/img207.jpg);
     hight: 270px;
     background-color:#383736;
-    background-blend-mode: hard-light;
+    background-blend-mode: soft-light;
 
 }
 #library .page-title{
@@ -219,8 +244,18 @@ aside{
 }
 
 @media (max-width:600px){
+    .mainpage-title{
+        font-size: 3rem;
+        color: transparent;
+        text-stroke: 1px white;
+        -webkit-text-stroke: 1px white;
+    }
     .page-title{
-        font-size: 2.5rem;
+        font-size: 3rem;
+        }
+    .page-subtitle{
+        font-size: 1.7rem;
+        font-weight:normal;
     }
 
     /*HEADER*/
@@ -367,4 +402,9 @@ margin-top: 3px;
 }
 .contact_body{
     font-weight:normal;
+}
+
+/*リンクの色を変えない*/
+a:visited{
+  color: inherit;
 }
