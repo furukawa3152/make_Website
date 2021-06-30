@@ -271,10 +271,21 @@ aside{
     .home-content{
         margin-top:20%;
     }
+    .home-under{
+        position: absolute;
+        bottom: auto;
+        top: 400px;
+        margin-left:4%;
+        padding: 0;
+        border: solid 1px #A4A4A4;
+        border-radius: 5px ;
+        padding: 2px 3px 2px 3px;
+    }
     /*NEWS*/
     .news-contents{
         flex-direction: column;
     }
+
     article,
     aside{
         width:100%;
