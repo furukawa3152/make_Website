@@ -51,6 +51,21 @@
         主な仕様ライブラリ：pandas<br>
         やりたかったこと：エクセルファイルの表を行ごとに取り出して利用したかった。
     </h4>
+    <table border="1">
+        <tr>
+            <th> ID </th>
+            <th>登録日</th>
+        </tr>
+        <tr>
+            <td>1000</td>
+            <td>2021/06/01</td>
+        </tr>
+        <tr>
+            <td>3001</td>
+            <td>2021/07/01</td>
+        </tr>
+
+    </table>
     <p>
 
     </p>
@@ -58,8 +73,8 @@
     <p>ちなみに職場で使っている会計ソフトに入力する日付使用に変換</p>
     <pre class="code-line prettyprint linenums" style="overflow:auto; overflow-y:hidden;">
     import pandas as pd
-    data_file = pd.read_excel("退院登録.xlsx")
-    arg_df = data_file[["ID", "退院日"]].values
+    data_file = pd.read_excel("登録テスト.xlsx")
+    arg_df = data_file[["ID", "登録日"]].values
     for row in arg_df:
         ID = str(int(row[0]))
         ent_ymd = row[1]
