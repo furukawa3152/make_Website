@@ -46,47 +46,68 @@
         <img class="post-icon" src="image/code_icon.png" alt="code-icon" width=55rem>
         <p class="post-cat">category：<a href="code.html">code</a>：python_tips</p>
     </header>
-    <h3>完全に自分の為の備忘録として残していきます。</h3>
-    <h4>1：excelファイルを行ごとに読み込むWIP<br>
-        主な仕様ライブラリ：pandas<br>
-        やりたかったこと：エクセルファイルの表を行ごとに取り出して利用したかった。
+    <h3>後で自分がコピペする用のいろいろ</h3>
+    <h4>1：excelファイルを行ごとに読み込む<br>
+        主な仕様ライブラリ：pandas(xlrdとopenpyxlもインストール)<br>
+        やりたかったこと：エクセルファイルの表を行ごとに取り出して利用。
     </h4>
-    <table  border=1>
+    <table  border=1 style="border-collapse: collapse; border-color:#b5b5b5; ">
+        <caption class="excel_demo_title">登録テスト.xlsx</caption>
         <tr>
             <th>ID</th>
             <th>登録日</th>
         </tr>
         <tr>
-            <td class="excel_demo">1000</td>
-            <td class="excel_demo">2021/06/01</td>
+            <td class="excel_demo">10</td>
+            <td class="excel_demo">2021/6/1</td>
         </tr>
         <tr>
-            <td class="excel_demo">3001</td>
-            <td class="excel_demo">2021/07/01</td>
+            <td class="excel_demo">15</td>
+            <td class="excel_demo">2021/7/1</td>
         </tr>
 
     </table>
-    <p>
-
-    </p>
-
-    <p>ちなみに職場で使っている会計ソフトに入力する日付使用に変換</p>
+    <p>◇データフレームとして格納編</p>
+    <pre class="code-line prettyprint linenums" style="overflow:auto; overflow-y:hidden;">
+    data_file = pd.read_excel("登録テスト.xlsx")
+    arg_df = data_file[["ID", "登録日"]].values
+    for row in arg_df:
+        print(row[0],row[1])
+        #10 2021-06-01 00:00:00
+        #15 2021-07-01 00:00:00     </pre>
+    <p>forの下にpyautoguiのコードが来て、システムへの自動入力など。</p><br>
+    <p>◇職場の会計ソフトの日付入力形式が、令和3年6月1日＝"5030601"なので変換</p>
     <pre class="code-line prettyprint linenums" style="overflow:auto; overflow-y:hidden;">
     import pandas as pd
     data_file = pd.read_excel("登録テスト.xlsx")
     arg_df = data_file[["ID", "登録日"]].values
     for row in arg_df:
         ID = str(int(row[0]))
-        ent_ymd = row[1]
-        orca_input_y = "5"+str("{0:02d}".format(ent_ymd.year-2018))
-        orca_input_m = str("{0:02d}".format(ent_ymd.month))
-        orca_input_d = str("{0:02d}".format(ent_ymd.day))
-        orca_input_ymd = orca_input_y + orca_input_m + orca_input_d
-        print(ID,orca_input_ymd)
-        ent_kaijo(ID,orca_input_ymd)
+        ymd = row[1]
+        alt_y = "5" + str("{0:02d}".format(ymd.year - 2018))
+        alt_m = str("{0:02d}".format(ymd.month))
+        alt_d = str("{0:02d}".format(ymd.day))
+        alt_ymd = alt_y + alt_m + alt_d
+        print(ID, alt_ymd)
         if ID == "":
-            break
-     </pre>
+            break　#空白セルが生きているときがあるので一応処理
+        #10 5030601
+        #15 5030701</pre>
+    <p>ニッチすぎるが私には汎用性のあるコードなので（笑）</p><br>
+    <p>◇dictとして格納したいとき編</p>
+    <pre class="code-line prettyprint linenums" style="overflow:auto; overflow-y:hidden;">
+    import pandas as pd
+    hoge_data = pd.read_excel("登録テスト.xlsx")
+    hoge_df = hoge_data[["ID", "登録日"]].values
+    hoge_dic = {}
+    for drug in hoge_df:
+        key = drug[0]
+        value = drug[1]
+        hoge_dic[key] = value
+    print(hoge_dic)
+    #{10: Timestamp('2021-06-01 00:00:00'), 15: Timestamp('2021-07-01 00:00:00')}</pre>
+    <p>これらを組み合わせると結構いろいろ出来る</p>
+
 </div>
 
 

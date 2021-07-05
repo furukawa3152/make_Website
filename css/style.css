@@ -417,5 +417,8 @@ margin-top: 3px;
 }
 
 .excel_demo{
-    padding: 5px 5px 5px 5px;
+    padding: 1px 12px 1px 12px;
+}
+.excel_demo_title{
+    text-align: left;
 }
