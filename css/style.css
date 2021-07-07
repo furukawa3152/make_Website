@@ -2,7 +2,7 @@
 /*共通部分*/
 html{
     font-size:100%
-
+    scroll-behavior: smooth;
 }
 body{
     font-family: 'Noto Sans JP', sans-serif;
@@ -421,4 +421,9 @@ margin-top: 3px;
 }
 .excel_demo_title{
     text-align: left;
+}
+
+.sub-nav{
+    display: flex;
+    list-style: none;/*リストの頭に点をつけない*/
 }

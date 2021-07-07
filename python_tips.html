@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>itaru`s productlibrary</title>
+    <title>itaru`s product python_tips</title>
     <meta name="viewport" content="width=device-width, initial-scale-1">
     <!--  css-->
     <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
@@ -51,6 +51,16 @@
         主な仕様ライブラリ：pandas(xlrdとopenpyxlもインストール)<br>
         やりたかったこと：エクセルファイルの表を行ごとに取り出して利用。
     </h4>
+    <nav>
+        <ul class="sub-nav">
+            <li><a href="#df">データフレーム編</a> </li>
+            <li><a href="#dict">　dict編</a> </li>
+        </ul>
+
+    </nav>
+
+
+
     <table  border=1 style="border-collapse: collapse; border-color:#b5b5b5; ">
         <caption class="excel_demo_title">登録テスト.xlsx</caption>
         <tr>
@@ -67,7 +77,7 @@
         </tr>
 
     </table>
-    <p>◇データフレームとして格納編</p>
+    <p id="df">◇データフレームとして格納編</p>
     <pre class="code-line prettyprint linenums" style="overflow:auto; overflow-y:hidden;">
     data_file = pd.read_excel("登録テスト.xlsx")
     arg_df = data_file[["ID", "登録日"]].values
@@ -94,7 +104,7 @@
         #10 5030601
         #15 5030701</pre>
     <p>ニッチすぎるが私には汎用性のあるコードなので（笑）</p><br>
-    <p>◇dictとして格納したいとき編</p>
+    <p id="dict">◇dictとして格納したいとき編</p>
     <pre class="code-line prettyprint linenums" style="overflow:auto; overflow-y:hidden;">
     import pandas as pd
     hoge_data = pd.read_excel("登録テスト.xlsx")
