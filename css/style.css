@@ -334,7 +334,6 @@ aside{
         display:flex;
     }
 
-
 }
 
 .grid{
@@ -426,4 +425,34 @@ margin-top: 3px;
 .sub-nav{
     display: flex;
     list-style: none;/*リストの頭に点をつけない*/
+}
+
+
+/*profile*/
+
+.prof-content{
+    margin: 0 10% 0 10%;
+    text-align:center;
+    margin-top: 3%;
+}
+.prof-title{
+    font-size:50px;
+    letter-spacing:3px;
+}
+.prof-subtitle{
+    font-size: 1.3rem;
+    font-weight:normal;
+ }
+
+.prof_icon{
+    background-color:#383736;
+    display:inline-block;
+    border-radius: 200rem ;
+}
+
+.prof_icon img{
+    opacity: 0.7;
+    display:block;
+    border-radius: 200rem ;
+
 }
