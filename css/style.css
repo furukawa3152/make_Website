@@ -333,7 +333,10 @@ aside{
     .grid{
         display:flex;
     }
-
+    .prof-subtitle{
+        font-size:1rem !important;
+        font-weight:normal;
+     }
 }
 
 .grid{
