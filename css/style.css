@@ -431,7 +431,7 @@ margin-top: 3px;
 /*profile*/
 
 .prof-content{
-    margin: 0 10% 10% 10%;
+    margin: 0 10% 0 10%;
     text-align:center;
     margin-top: 3%;
 }
@@ -442,6 +442,7 @@ margin-top: 3px;
 .prof-subtitle{
     font-size: calc(15px + 0.3vw);
     font-weight:normal;
+    padding: 0 0 10% 0;
  }
 
 .prof_icon{
