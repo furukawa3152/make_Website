@@ -457,3 +457,38 @@ margin-top: 3px;
     border-radius: 200rem ;
 
 }
+
+/*TOPページのメニュー*/
+.btn-menu{
+    position: absolute;
+    top: 8px;
+    right: 0.5rem;
+    color: var(--white);
+    padding: .5rem;
+}
+.btn-menu:hover{
+    color:#eda81c;
+}
+.top-nav{
+    background: var(--grey);
+    width: 0;
+    position: absolute;
+    z-index: 2;
+    top: 40px;
+    right: 0;
+    overflow: hidden;
+    transition: .5s;
+
+}
+.top-nav li{
+    text-align:right;
+    margin: 1rem 1rem;
+    list-style: none;
+}
+.top-nav a{
+    display: block;
+    color: var(--white);
+}
+.top-nav.open-menu{
+    width: 100%;
+}
