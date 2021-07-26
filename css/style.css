@@ -499,3 +499,11 @@ margin-top: 3px;
 .top-nav.open-menu{
     width: 100%;
 }
+
+/*強調表示*/
+.underline{
+    font-weight:normal;
+    display: inline-block;
+    background-image: linear-gradient(transparent 60%,#ffff00 40%);
+    padding-bottom: .15rem;
+}

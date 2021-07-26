@@ -43,7 +43,7 @@
 <div class="code-body">
     <header class="post-info">
         <h2 class="post-title">我が家のLine_Botを作るぜ</h2>
-        <img class="post-icon" src="image/potate_boy.jpg" alt="potate_boy" width=55rem>
+        <img class="post-icon" src="image/line.png" alt="line_icon" width=55rem>
         <p class="post-cat">category：<a href="code.html">code</a>：My_Line_bot</p>
     </header>
     <h3>プログラム概要</h3>
@@ -76,9 +76,9 @@
     <p>GoogleアカウントでGCPに登録。クレジットカードの登録が必要。今回の用途（driveとsheets_API）は
         登録すれば制限なく無料にて利用可能のようである（R3.7現在）。<br>
         プロジェクトを作成し、「APIとサ－ビス」より「Google Drive API」と「Sheets API」を有効化。<br>
-        「APIとサ－ビス」の認証情報より、サービスアカウントを適当な名前で新規作成し、jsonファイルをダウンロードする。<br>
+        「APIとサ－ビス」の認証情報より、サービスアカウントを適当な名前で新規作成し、<b class="underline">jsonファイルをダウンロードする。</b><br>
         スプレッドシートを作成し、「共有」ボタンよりjsonファイル内の「client_email」のアドレスを編集者として共有させる。<br>
-        ※スプレッドシートのURLとSheet名が後々必要になるので控えておく。<br>
+        <b class="underline">※スプレッドシートのURLとSheet名が後々必要になるので控えておく。</b><br>
         <br>
 
     </p>
@@ -90,36 +90,96 @@
     <p>LINE DevelopersにLineアカウントでサインイン。<br>
         <a href="https://developers.line.biz/console/channel/new?type=messaging-api">messaging-api</a>
         のページでプロバイダを新規登録する。<br>
-        ここでは「チャネル基本設定」タブの「チャネルシークレット」と「Messaging API設定」タブの「チャネルアクセストークン」を控える。
-
+        ここでは「チャネル基本設定」タブの<b class="underline">「チャネルシークレット」</b>と
+        「Messaging API設定」タブの<b class="underline">「チャネルアクセストークン」</b>を控える。
     </p>
 
-
-
+    <p class="post-info"></p>
+    <h3 id="#bot_python">3：line-bot-sdkで実装</h3>
+    <p>いよいよpythonで実装。LINE公式ライブラリの「line-bot-sdk」のpythonのGithubリポジトリより、入力をそのままオウム返し
+        するコードが書いてあるため借用。
+    </p>
     <pre class="code-line prettyprint linenums" style="overflow:auto; overflow-y:hidden;">
-    import numpy as np
-    import cv2
-　　 def macth_image(image, template):  # マッチした位置、スケール、一致度を返す
-        height = template.shape[0]
-        width = template.shape[1]
-        g_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)  # グレースケール加工
-        scale = [0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1, 1.05, 1.1, 1.15,
-                 1.2, 1.25,
-                 1.3, 1.35, 1.4, 1.45, 1.5, 1.55, 1.6, 1.65, 1.7, 1.75, 1.8, 2, 2.3, 2.6, 2.8, 3, 3.2, 3.5]
-        rank = []#一致度のみを格納するlist
-        for i in scale:  # scaleのパターンだけ縮小→拡大し、最もマッチする値を選ぶ
-            g_template = cv2.cvtColor(template, cv2.COLOR_BGR2GRAY)
-            g_template = cv2.resize(g_template, (int(width * i), int(height * i)))  # 縮小拡大
-            result = cv2.matchTemplate(g_image, g_template, cv2.TM_CCOEFF_NORMED)
-            min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
-            rank.append(max_val)
+    import os　
+    import random　#後で使う
+    import pandas as pd
+    import gspread
+    from flask import Flask, request, abort
+    from linebot import (
+        LineBotApi, WebhookHandler
+    )
+    from linebot.exceptions import (
+        InvalidSignatureError
+    )
+    from linebot.models import (
+        MessageEvent, TextMessage, TextSendMessage,
+    )
+    from datetime import datetime, timedelta
+    from oauth2client.service_account import ServiceAccountCredentials
 
-        best_scale = scale[np.argmax(rank)]
-        g_template = cv2.cvtColor(template, cv2.COLOR_BGR2GRAY)
-        g_template = cv2.resize(g_template, (int(width * best_scale), int(height * best_scale)))  # 縮小拡大
-        result = cv2.matchTemplate(g_image, g_template, cv2.TM_CCOEFF_NORMED)
-        min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
-        return (min_val, max_val, min_loc, max_loc, g_template, best_scale)
+
+    app = Flask(__name__)
+    #実際は直書きはせず、os.environでherokuの環境変数に入れる。後述。
+    YOUR_CHANNEL_ACCESS_TOKEN="手順2のチャネルトークン"
+    YOUR_CHANNEL_SECRET="手順2のチャネルシークレット"
+
+    line_bot_api = LineBotApi(YOUR_CHANNEL_ACCESS_TOKEN)
+    handler = WebhookHandler(YOUR_CHANNEL_SECRET)
+    @app.route('/')
+    def hello_world():
+        return "hello_world"
+
+    @app.route("/callback", methods=['POST'])
+    def callback():
+        # get X-Line-Signature header value
+        signature = request.headers['X-Line-Signature']
+
+        # get request body as text
+        body = request.get_data(as_text=True)
+        app.logger.info("Request body: " + body)
+
+        # handle webhook body
+        try:
+            handler.handle(body, signature)
+        except InvalidSignatureError:
+            print("Invalid signature. Please check your channel access token/channel secret.")
+            abort(400)
+
+        return 'OK'
+
+　　#ここまでほぼ100%公式のまま。ここからちょっと変更して、オウム返しでなく、スプレッドシートから返答を引き出す仕様に。
+    @handler.add(MessageEvent, message=TextMessage)
+    def handle_message(event):
+            reply = get_record(event.message.text)
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text=reply))
+    #GCPの認証して、スプレッドシートの任意のシートを返す関数。
+    def auth():　
+    #手順1で用意したjsonファイルを'secret.json'という名前で同一ディレクトリに。
+    SP_CREDENTIAL_FILE = 'secret.json'
+    # APIを利用する範囲
+    SP_SCOPE = [
+        'https://spreadsheets.google.com/feeds',
+        'https://www.googleapis.com/auth/drive'
+    ]
+    SP_SHEET_KEY = '手順1で用意したスプレッドシートのURLのd/より後から/editの前まで'
+    SP_SHEET = 'シート名'
+    credentials = ServiceAccountCredentials.from_json_keyfile_name(SP_CREDENTIAL_FILE, SP_SCOPE)
+    gc = gspread.authorize(credentials)
+    worksheet = gc.open_by_key(SP_SHEET_KEY).worksheet(SP_SHEET)
+    return worksheet
+
+　　 #auth関数で手に入れたワークシートをデータフレーム化。
+    def get_record(key):
+        worksheet = auth()
+        df = pd.DataFrame(worksheet.get_all_records())
+        reply_df = df[["入力", "返し"]].values
+        reply = []
+        for row in reply_df:
+            if row[0] in key:
+                reply.append(row[1])
+        return (random.choice(reply))
     </pre>
     <p>scaleの幅は何となく設定。増やしすぎると時間がかかるため、この辺が実用的というところにおさまった。
         また、こういう画像処理はグレースケールで行う方がよいと聞いたのでついでに実装。</p>
