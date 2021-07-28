@@ -334,6 +334,19 @@ aside{
     .grid{
         display:flex;
     }
+    .body-withimage{
+    display: flex;
+    margin: 3px 3px 3px 3px;
+    }
+    .body-withimage a{
+        width: 110px;
+    }
+
+    .body-withimage div{
+        width:250px;
+        font-size:0.9rem;
+        padding-left: 25px;
+    }
 
 }
 
@@ -374,10 +387,15 @@ margin-left:3px;
     display: flex;
     margin: 3px 3px 3px 3px;
 }
+.body-withimage a{
+    width: 110px;
+}
 
 .body-withimage div{
-    padding-left: 15px;
+    padding-left: 25px;
 }
+
+
 .app_button{
     color: black;
     background-color: #eda81c;
