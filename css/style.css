@@ -2,7 +2,9 @@
 /*共通部分*/
 html{
     font-size:100%;
+    scroll-behavior: smooth;
 }
+
 body{
     font-family: 'Noto Sans JP', sans-serif;
     line-height: 1.7;
@@ -372,6 +374,10 @@ margin-left:3px;
     display: flex;
     margin: 3px 3px 3px 3px;
 }
+
+.body-withimage div{
+    padding-left: 15px;
+}
 .app_button{
     color: black;
     background-color: #eda81c;
@@ -429,6 +435,9 @@ margin-top: 3px;
     line-height:1.7;
     list-style: decimal;/*リストの頭に点をつけない*/
     padding:5px 0 0 25px;
+}
+.sub-nav-vert a{
+    color:#383736;
 }
 
 
