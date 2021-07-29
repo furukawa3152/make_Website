@@ -214,7 +214,10 @@
     $ git commit -m "My first commit"
 
     #push
-    $ git push heroku main    </pre>
+    $ git push heroku main
+
+    #環境変数を設定（今回はline_tokenという変数名に）
+    $ heroku config:set line_token=アクセストークンの値  </pre>
 
     <p>&darr;デプロイ完了したら、LineのMessaging API設定のWebhook設定に"アプリurl/callback"というURLを登録しWenhookの利用をオンにすれば準備完了。</p>
     <img src="image/lineAPI.jpg" alt="lineAPI.jpg" width=300rem>
