@@ -158,19 +158,19 @@
                 TextSendMessage(text=reply))
     #GCPの認証して、スプレッドシートの任意のシートを返す関数。
     def auth():　
-    #手順1で用意したjsonファイルを'secret.json'という名前で同一ディレクトリに。
-    SP_CREDENTIAL_FILE = 'secret.json'
-    # APIを利用する範囲
-    SP_SCOPE = [
-        'https://spreadsheets.google.com/feeds',
-        'https://www.googleapis.com/auth/drive'
-    ]
-    SP_SHEET_KEY = '手順1で用意したスプレッドシートのURLのd/より後から/editの前まで'
-    SP_SHEET = 'シート名'
-    credentials = ServiceAccountCredentials.from_json_keyfile_name(SP_CREDENTIAL_FILE, SP_SCOPE)
-    gc = gspread.authorize(credentials)
-    worksheet = gc.open_by_key(SP_SHEET_KEY).worksheet(SP_SHEET)
-    return worksheet
+        #手順1で用意したjsonファイルを'secret.json'という名前で同一ディレクトリに。
+        SP_CREDENTIAL_FILE = 'secret.json'
+        # APIを利用する範囲
+        SP_SCOPE = [
+            'https://spreadsheets.google.com/feeds',
+            'https://www.googleapis.com/auth/drive'
+        ]
+        SP_SHEET_KEY = '手順1で用意したスプレッドシートのURLのd/より後から/editの前まで'
+        SP_SHEET = 'シート名'
+        credentials = ServiceAccountCredentials.from_json_keyfile_name(SP_CREDENTIAL_FILE, SP_SCOPE)
+        gc = gspread.authorize(credentials)
+        worksheet = gc.open_by_key(SP_SHEET_KEY).worksheet(SP_SHEET)
+        return worksheet
 
 　　 #auth関数で手に入れたワークシートをデータフレーム化。入力文字列に対応する返しをランダムで出してくれる関数。
     def get_record(key):
